@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>«Чемпион» — протокол восстановления без допинга за 4 дня до старта | Сочи</title>
+<meta name="description" content="Программа «Чемпион»: 2 сеанса биоэнергетического массажа + 1 флакон «Феникса» за 4 дня до соревнований. Плавание, борьба, футбол. Сочи." />
+
+<!--
+  ПРОГРАММА «ЧЕМПИОН»
+  📁 СТРУКТУРА ФАЙЛОВ (положите рядом с index.html папку images/):
+    images/hero.png            — 4:5 вертикальная
+    images/card-massage.png    — 16:9
+    images/card-elixir.png     — 16:9
+    images/card-protocol.png   — 16:9
+    images/sports.png          — 21:9
+  Если картинки нет — покажется градиент-заглушка.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ===================== ПЕРЕМЕННЫЕ ===================== */
+  :root{
+    --bg: #0a0e17;
+    --bg-2: #111725;
+    --card: #151c2c;
+    --card-2: #1a2334;
+    --border: #232d42;
+    --text: #e8ecf4;
+    --muted: #9aa6bd;
+    --accent: #39e6a8;
+    --accent-2: #4fc3ff;
+    --accent-glow: rgba(57,230,168,.25);
+    --danger: #ff6b6b;
+    --radius: 18px;
+    --radius-sm: 12px;
+    --max: 1180px;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-head: 'Space Grotesk', 'Inter', sans-serif;
+  }
+
+  *{ box-sizing: border-box; margin: 0; padding: 0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: radial-gradient(1200px 600px at 80% -10%, rgba(79,195,255,.12), transparent 60%),
+                radial-gradient(1000px 500px at -10% 20%, rgba(57,230,168,.10), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img, svg{ display: block; max-width: 100%; }
+  a{ color: inherit; text-decoration: none; }
+  h1, h2, h3, h4{ font-family: var(--font-head); line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
+  h2{ font-size: clamp(1.6rem, 3.4vw, 2.4rem); }
+  p{ color: var(--muted); }
+  .container{ width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+  section{ padding: 84px 0; position: relative; }
+  @media (max-width: 640px){ section{ padding: 60px 0; } }
+
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity: 1; transform: none; }
+
+  /* Кнопки */
+  .btn{
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+    border: 1px solid transparent; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s;
+    white-space: nowrap; font-family: inherit;
+  }
+  .btn:active{ transform: translateY(1px); }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--accent), #25c08a);
+    color: #04160f; box-shadow: 0 8px 30px var(--accent-glow);
+  }
+  .btn-primary:hover{ box-shadow: 0 12px 40px var(--accent-glow); transform: translateY(-2px); }
+  .btn-ghost{ background: transparent; color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
+  .btn-block{ width: 100%; }
+
+  /* Хедер */
+  header.site-header{
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px); background: rgba(10,14,23,.7);
+    border-bottom: 1px solid rgba(35,45,66,.6);
+  }
+  .header-inner{
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px; max-width: var(--max); margin: 0 auto;
+  }
+  .logo{
+    font-family: var(--font-head); font-weight: 700; font-size: 1.05rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-mark{
+    width: 32px; height: 32px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 24px var(--accent-glow);
+    display: grid; place-items: center;
+    color: #04160f; font-size: 1rem; font-weight: 800;
+  }
+  .nav-links{ display: none; gap: 26px; font-size: .95rem; color: var(--muted); }
+  .nav-links a:hover{ color: var(--accent); }
+  @media (min-width: 900px){ .nav-links{ display: flex; } }
+  .header-cta{ display: none; }
+  @media (min-width: 900px){ .header-cta{ display: inline-flex; padding: 10px 20px; font-size: .92rem; } }
+
+  /* Hero */
+  .hero{ padding-top: 70px; padding-bottom: 40px; }
+  .hero-grid{ display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 980px){ .hero-grid{ grid-template-columns: 1.15fr .85fr; gap: 60px; } }
+
+  .badge{
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px;
+    background: rgba(57,230,168,.10); color: var(--accent);
+    border: 1px solid rgba(57,230,168,.25);
+    font-size: .82rem; font-weight: 600; margin-bottom: 22px;
+  }
+  .badge::before{ content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+  .hero h1{ font-size: clamp(2rem, 5vw, 3.6rem); margin-bottom: 20px; }
+  .hero h1 .accent{ color: var(--accent); }
+  .hero .lead{ font-size: clamp(1rem, 1.6vw, 1.15rem); color: var(--muted); max-width: 560px; margin-bottom: 30px; }
+  .hero-cta{ display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .hero-visual{
+    position: relative;
+    aspect-ratio: 4 / 5;
+    max-width: 460px; width: 100%;
+    margin: 0 auto;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, #131a2a, #0e1421);
+    box-shadow: inset 0 0 60px rgba(57,230,168,.08), 0 30px 80px rgba(0,0,0,.5);
+  }
+  /* IMAGE: images/hero.png — заменяет фон контейнера */
+  .hero-visual img{
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(1.05) contrast(1.05);
+  }
+  .hero-visual::after{
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,14,23,0) 40%, rgba(10,14,23,.88) 100%);
+    pointer-events: none;
+  }
+  .hero-visual .stats{
+    position: absolute; inset: auto 0 0 0; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; padding: 18px;
+  }
+  .stat{
+    background: rgba(10,14,23,.72);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    backdrop-filter: blur(6px);
+  }
+  .stat .num{ font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; color: var(--text); }
+  .stat .lbl{ font-size: .74rem; color: var(--muted); }
+
+  /* Заголовки секций */
+  .section-head{ max-width: 700px; margin-bottom: 44px; }
+  .eyebrow{
+    display: inline-block; font-size: .8rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+  }
+  .section-head .eyebrow{ margin-bottom: 12px; }
+  .section-head h2{ margin-bottom: 14px; }
+  .section-head p{ font-size: 1.02rem; }
+
+  /* Сетка карточек */
+  .grid-3{ display: grid; gap: 20px; grid-template-columns: 1fr; }
+  @media (min-width: 860px){ .grid-3{ grid-template-columns: repeat(3, 1fr); } }
+
+  .card{
+    --card-pad: 26px;
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--card-pad);
+    transition: transform .25s ease, border-color .25s, box-shadow .25s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover{ transform: translateY(-4px); border-color: rgba(57,230,168,.4); box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+  .card h3{ font-size: 1.15rem; margin: 0 0 10px; }
+  .card p{ font-size: .95rem; }
+
+  .card-img{
+    aspect-ratio: 16 / 9;
+    margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 18px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a2334, #0e1421);
+  }
+  .card-img img{ width: 100%; height: 100%; object-fit: cover; }
+
+  /* Таймлайн */
+  .timeline{ display: grid; gap: 18px; grid-template-columns: 1fr; position: relative; }
+  @media (min-width: 860px){ .timeline{ grid-template-columns: repeat(4, 1fr); gap: 14px; } }
+  .tl-step{
+    position: relative;
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+  }
+  .tl-step::before{
+    content: ""; position: absolute; left: 20px; top: -7px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 14px var(--accent);
+  }
+  .tl-step .day{ font-family: var(--font-head); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .tl-step h4{ font-size: 1.02rem; margin-bottom: 6px; }
+  .tl-step p{ font-size: .92rem; }
+
+  /* Баннер «Виды спорта» */
+  .sports-banner{
+    aspect-ratio: 21 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+    background: linear-gradient(135deg, #1a2334, #0e1421);
+  }
+  .sports-banner img{ width: 100%; height: 100%; object-fit: cover; }
+
+  /* Карточки видов спорта */
+  .sport-card .tag{
+    display: inline-block; font-size: .78rem; padding: 3px 10px;
+    border-radius: 999px; background: rgba(79,195,255,.12); color: var(--accent-2);
+    border: 1px solid rgba(79,195,255,.3); margin-bottom: 14px; font-weight: 600;
+    align-self: flex-start;
+  }
+  .sport-card .pain{ margin-top: 12px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: .88rem; }
+  .sport-card .pain b{ color: var(--text); }
+
+  /* Тарифы */
+  .pricing-grid{ display: grid; gap: 20px; grid-template-columns: 1fr; align-items: stretch; }
+  @media (min-width: 900px){ .pricing-grid{ grid-template-columns: repeat(3, 1fr); } }
+
+  .price-card{
+    position: relative;
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+    display: flex; flex-direction: column;
+    transition: transform .25s ease, border-color .25s, box-shadow .25s;
+  }
+  .price-card:hover{ transform: translateY(-4px); border-color: rgba(57,230,168,.4); }
+  .price-card.featured{
+    border-color: rgba(57,230,168,.55);
+    box-shadow: 0 20px 60px rgba(57,230,168,.15);
+    background: linear-gradient(180deg, #16202f, #131b2a);
+  }
+  .price-card .ribbon{
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), #25c08a);
+    color: #04160f; font-weight: 700; font-size: .78rem;
+    padding: 6px 14px; border-radius: 999px; white-space: nowrap;
+    letter-spacing: .04em;
+  }
+  .price-card h3{ font-size: 1.3rem; margin-bottom: 6px; }
+  .price-card .for{ font-size: .9rem; color: var(--muted); min-height: 42px; }
+  .price-card .amount{ display: flex; align-items: baseline; gap: 10px; margin: 18px 0 6px; }
+  .price-card .amount .v{ font-family: var(--font-head); font-size: 2.1rem; font-weight: 700; color: var(--text); }
+  .price-card .amount .old{ font-size: .95rem; color: var(--muted); text-decoration: line-through; }
+  .price-card .included{ list-style: none; margin: 18px 0 24px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .price-card .included li{ display: flex; gap: 10px; font-size: .93rem; color: var(--muted); }
+  .price-card .included li::before{ content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .price-card .btn{ margin-top: auto; }
+  .upgrade-line{
+    text-align: center; margin-top: 26px; font-size: .95rem;
+    padding: 16px; border-radius: var(--radius-sm);
+    background: rgba(79,195,255,.06); border: 1px dashed rgba(79,195,255,.3);
+  }
+  .upgrade-line b{ color: var(--accent-2); }
+
+  /* Кейсы */
+  .case-card .sport-tag{ font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+  .case-card .flow{ display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .flow-row{ display: grid; grid-template-columns: 84px 1fr; gap: 12px; font-size: .92rem; }
+  .flow-row .k{ color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; padding-top: 2px; }
+  .flow-row .v{ color: var(--text); }
+
+  /* Вирусный блок */
+  .viral{
+    background: linear-gradient(135deg, rgba(57,230,168,.06), rgba(79,195,255,.05));
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 44px 32px;
+    display: grid; gap: 30px; grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px){ .viral{ grid-template-columns: 1.1fr .9fr; padding: 56px 44px; align-items: center; } }
+  .viral h2{ margin: 12px 0 14px; }
+  .viral p{ margin-bottom: 14px; }
+  .viral .hashtag{
+    display: inline-block; font-family: var(--font-head); font-size: 1.2rem; font-weight: 700;
+    color: var(--accent); padding: 8px 16px; border-radius: 10px;
+    background: rgba(57,230,168,.1); border: 1px solid rgba(57,230,168,.3);
+    margin: 10px 0 20px;
+  }
+  .viral-list{ list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .viral-list li{ display: flex; gap: 12px; font-size: .95rem; color: var(--muted); }
+  .viral-list li::before{ content: "▸"; color: var(--accent); font-weight: 700; }
+  .video-stack{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .video-stack .v{
+    aspect-ratio: 9 / 16;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #1a2334, #0e1421);
+    border: 1px solid var(--border);
+    display: flex; align-items: flex-end; padding: 12px;
+    font-size: .78rem; color: var(--muted);
+    position: relative; overflow: hidden;
+  }
+  .video-stack .v::before{
+    content: "▶"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 1.4rem; color: var(--accent); opacity: .6;
+  }
+
+  /* FAQ */
+  .faq{ display: flex; flex-direction: column; gap: 10px; max-width: 820px; margin: 0 auto; }
+  .faq-item{ background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; transition: border-color .2s; }
+  .faq-item.open{ border-color: rgba(57,230,168,.4); }
+  .faq-q{
+    width: 100%; text-align: left; background: transparent; border: none; color: var(--text);
+    font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 18px 22px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer;
+  }
+  .faq-q .plus{ flex-shrink: 0; width: 22px; height: 22px; display: grid; place-items: center; font-size: 1.4rem; color: var(--accent); transition: transform .25s; line-height: 1; }
+  .faq-item.open .plus{ transform: rotate(45deg); }
+  .faq-a{ max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+  .faq-a-inner{ padding: 0 22px 20px; font-size: .95rem; color: var(--muted); }
+
+  /* CTA + форма */
+  .cta-block{
+    background: linear-gradient(135deg, #101a2a, #0c1220);
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    padding: 44px 28px;
+    display: grid; gap: 36px; grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px){ .cta-block{ grid-template-columns: 1fr 1fr; padding: 56px 48px; align-items: center; } }
+  .cta-block h2{ margin: 12px 0 14px; }
+  .cta-block p{ margin-bottom: 18px; }
+
+  form.lead-form{ display: flex; flex-direction: column; gap: 14px; }
+  .field{ display: flex; flex-direction: column; gap: 6px; }
+  .field label{ font-size: .82rem; color: var(--muted); font-weight: 500; }
+  .field input, .field select{
+    background: #0e1523; border: 1px solid var(--border); color: var(--text);
+    padding: 13px 14px; border-radius: 10px; font-family: inherit; font-size: .95rem;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .field input:focus, .field select:focus{ outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(57,230,168,.15); }
+  .field input.invalid, .field select.invalid{ border-color: var(--danger); }
+  .form-note{ font-size: .8rem; color: var(--muted); margin-top: 4px; }
+  .form-success{
+    display: none; padding: 16px 18px; border-radius: 12px;
+    background: rgba(57,230,168,.1); border: 1px solid rgba(57,230,168,.35);
+    color: var(--accent); font-weight: 600; font-size: .95rem;
+  }
+  .form-success.show{ display: block; }
+  .disclaimer{ font-size: .78rem; color: #6f7a90; margin-top: 22px; line-height: 1.5; }
+
+  /* Футер */
+  footer{ border-top: 1px solid var(--border); padding: 40px 0 32px; margin-top: 40px; font-size: .9rem; color: var(--muted); }
+  .footer-grid{ display: grid; gap: 24px; grid-template-columns: 1fr; }
+  @media (min-width: 760px){ .footer-grid{ grid-template-columns: 1.4fr 1fr 1fr; } }
+  .footer-grid h5{ font-family: var(--font-head); color: var(--text); margin-bottom: 12px; font-size: 1rem; }
+  .footer-grid a{ display: block; margin-bottom: 6px; }
+  .footer-grid a:hover{ color: var(--accent); }
+  .footer-bottom{
+    margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;
+    font-size: .82rem; color: #6f7a90;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== ХЕДЕР ===================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark" aria-hidden="true">🏆</div>
+      <span>Чемпион</span>
+    </div>
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a href="#how">Как это работает</a>
+      <a href="#sports">Виды спорта</a>
+      <a href="#pricing">Пакеты</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#signup" class="btn btn-primary header-cta">Записаться</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="badge">Без запрещённых веществ</span>
+          <h1>Программа <span class="accent">«Чемпион»</span>.<br>Протокол восстановления за 4 дня до старта.</h1>
+          <p class="lead">
+            2 сеанса биоэнергетического массажа + 1 флакон «Феникса» — для плавания, борьбы и футбола. Без допинга. Сочи.
+          </p>
+          <div class="hero-cta">
+            <a href="#pricing" class="btn btn-primary">Выбрать пакет</a>
+            <a href="#how" class="btn btn-ghost">Как это работает</a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-hidden="true">
+          <!-- IMAGE: images/hero.png — вертикальная 4:5, спортсмен в действии -->
+          <img src="images/hero.png" alt="Спортсмен на старте" loading="eager" />
+          <div class="stats">
+            <div class="stat"><div class="num">2</div><div class="lbl">сеанса массажа</div></div>
+            <div class="stat"><div class="num">1</div><div class="lbl">флакон эликсира</div></div>
+            <div class="stat"><div class="num">3 500 ₽</div><div class="lbl">пакет «Спринт»</div></div>
+            <div class="stat"><div class="num">🏆</div><div class="lbl">программа «Чемпион»</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ЧТО ЭТО ===================== -->
+  <section id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Что это</span>
+        <h2>Не массаж и не БАД по отдельности — протокол</h2>
+        <p>Мы продаём не процедуру и не добавку, а формат подготовки к соревнованиям с понятным результатом-наблюдением.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card reveal">
+          <!-- IMAGE: images/card-massage.png — 16:9, биоэнергетические перчатки, сеанс массажа -->
+          <div class="card-img">
+            <img src="images/card-massage.png" alt="Биоэнергетический массаж" loading="lazy" />
+          </div>
+          <h3>Биоэнергетический массаж</h3>
+          <p>Аппарат Fohow и биоэнергетические перчатки. Работа по активным точкам и меридианам, снятие мышечной забитости, поддержка кровообращения и восстановления после интенсивных тренировок.</p>
+        </article>
+        <article class="card reveal">
+          <!-- IMAGE: images/card-elixir.png — 16:9, флакон эликсира «Феникс» -->
+          <div class="card-img">
+            <img src="images/card-elixir.png" alt="Эликсир «Феникс»" loading="lazy" />
+          </div>
+          <h3>Эликсир «Феникс»</h3>
+          <p>Жидкий БАД на основе кордицепса, линчжи и шиитаке. Поддержка тонуса и восстановления. Упаковка — 4 флакона × 30 мл.</p>
+        </article>
+        <article class="card reveal">
+          <!-- IMAGE: images/card-protocol.png — 16:9, спортсмен готовится к старту -->
+          <div class="card-img">
+            <img src="images/card-protocol.png" alt="Протокол 4 дня до старта" loading="lazy" />
+          </div>
+          <h3>Протокол «4 дня»</h3>
+          <p>2 сеанса + приём флакона по схеме. Рассчитан на предсоревновательный цикл — когда до старта считанные дни, а форма нужна сейчас.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ТАЙМЛАЙН ===================== -->
+  <section id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Как работает протокол</span>
+        <h2>4 дня — 4 шага</h2>
+        <p>Каждый день — конкретное действие. Без сложных схем и лишних процедур.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-step reveal"><div class="day">День 1</div><h4>Старт</h4><p>Первый сеанс биоэнергетического массажа + начало приёма флакона «Феникса». Снимаем основную забитость.</p></div>
+        <div class="tl-step reveal"><div class="day">День 2</div><h4>Поддержка</h4><p>Приём эликсира по схеме. Лёгкая тренировка, работа над техникой.</p></div>
+        <div class="tl-step reveal"><div class="day">День 3</div><h4>Второй сеанс</h4><p>Работа по ключевым зонам вида спорта: плечи, поясница, ноги.</p></div>
+        <div class="tl-step reveal"><div class="day">День 4</div><h4>Старт</h4><p>Выход на соревнования с ощущением собранности, а не «разбитости».</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ВИДЫ СПОРТА ===================== -->
+  <section id="sports">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Для кого</span>
+        <h2>Под каждый вид спорта — свои зоны</h2>
+        <p>Протокол адаптируется под специфику нагрузки: где «забивается» у пловца, у борца и у футболиста — разные зоны.</p>
+      </div>
+
+      <!-- IMAGE: images/sports.png — 21:9, триптих: пловец / борец / футболист -->
+      <div class="sports-banner reveal">
+        <img src="images/sports.png" alt="Плавание, борьба, футбол" loading="lazy" />
+      </div>
+
+      <div class="grid-3">
+        <article class="card sport-card reveal">
+          <span class="tag">Плавание</span>
+          <h3>Разгрузить плечи и поясницу</h3>
+          <p>Объёмные тренировки «забивают» плечевой пояс и поясницу, ломают амплитуду гребка.</p>
+          <div class="pain"><b>Точка боли:</b> плечи, поясница, дыхательные мышцы.</div>
+        </article>
+        <article class="card sport-card reveal">
+          <span class="tag">Борьба</span>
+          <h3>Вернуть подвижность без фармподдержки</h3>
+          <p>Сборы и весогонка дают скованность в пояснице и шее, мешают выходить на ковёр.</p>
+          <div class="pain"><b>Точка боли:</b> суставы, шея, поясница, восстановление между схватками.</div>
+        </article>
+        <article class="card sport-card reveal">
+          <span class="tag">Футбол</span>
+          <h3>Успеть восстановить ноги</h3>
+          <p>Между играми турнира — 3–4 дня. За это время нужно снять «тяжесть» в ногах и паху.</p>
+          <div class="pain"><b>Точка боли:</b> ноги, пах, поясница, восстановление между матчами.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ТАРИФЫ ===================== -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Пакеты</span>
+        <h2>Выберите свой уровень</h2>
+        <p>От «Спринта» за 4 дня до старта до командного формата для секции или клуба.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="price-card reveal">
+          <h3>Спринт</h3>
+          <p class="for">Для подростков и любителей, которым нужно срочно войти в форму к старту.</p>
+          <div class="amount"><span class="v">3 500 ₽</span><span class="old">3 600 ₽</span></div>
+          <ul class="included">
+            <li>2 сеанса биоэнергетического массажа</li>
+            <li>1 флакон «Феникса» (30 мл)</li>
+            <li>Схема приёма на 4 дня</li>
+            <li>План подготовки к старту</li>
+          </ul>
+          <a href="#signup" class="btn btn-primary btn-block" data-package="Спринт — 3 500 ₽">Выбрать «Спринт»</a>
+        </article>
+
+        <article class="price-card featured reveal">
+          <span class="ribbon">Выбор большинства</span>
+          <h3>Стандарт</h3>
+          <p class="for">Для спортсменов, которые готовятся к чемпионату и хотят пройти полный цикл.</p>
+          <div class="amount"><span class="v">7 500 ₽</span></div>
+          <ul class="included">
+            <li>5 сеансов биоэнергетического массажа</li>
+            <li>Упаковка «Феникса» (4 флакона)</li>
+            <li>Схема приёма на 2–3 недели</li>
+            <li>Поддержка до старта</li>
+          </ul>
+          <a href="#signup" class="btn btn-primary btn-block" data-package="Стандарт — 7 500 ₽">Выбрать «Стандарт»</a>
+        </article>
+
+        <article class="price-card reveal">
+          <h3>Командный</h3>
+          <p class="for">Для группы 5–8 человек: команда, секция, клуб.</p>
+          <div class="amount"><span class="v">от 28 000 ₽</span></div>
+          <ul class="included">
+            <li>Выездные сеансы биоэнергетического массажа</li>
+            <li>«Феникс» на команду</li>
+            <li>Мини-семинар для тренера</li>
+            <li>Цена на одного спортсмена ниже</li>
+          </ul>
+          <a href="#signup" class="btn btn-ghost btn-block" data-package="Командный — от 28 000 ₽">Обсудить команду</a>
+        </article>
+      </div>
+
+      <div class="upgrade-line reveal">
+        Уже прошли «Спринт»? <b>Доплатите до «Стандарта»</b> — получите оставшиеся сеансы и флаконы без потери темпа.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== КЕЙСЫ ===================== -->
+  <section id="cases">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Кейсы</span>
+        <h2>Наблюдения, а не обещания</h2>
+        <p>Формат «запрос → протокол → что отметили». Без медицинских гарантий — только слова спортсменов и тренеров.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card case-card reveal">
+          <span class="sport-tag">Плавание · 14 лет</span>
+          <div class="flow">
+            <div class="flow-row"><span class="k">Запрос</span><span class="v">После объёмной недели плечи «каменные», падает амплитуда гребка.</span></div>
+            <div class="flow-row"><span class="k">Протокол</span><span class="v">«Спринт»: 2 сеанса + флакон за 4 дня.</span></div>
+            <div class="flow-row"><span class="k">Отметили</span><span class="v">Тренер заметил возвращение амплитуды на четвёртый день.</span></div>
+          </div>
+        </article>
+        <article class="card case-card reveal">
+          <span class="sport-tag">Борьба · 16 лет</span>
+          <div class="flow">
+            <div class="flow-row"><span class="k">Запрос</span><span class="v">После сборов забилась поясница, страх выходить на ковёр.</span></div>
+            <div class="flow-row"><span class="k">Протокол</span><span class="v">2 сеанса биоэнергетического массажа + эликсир «Феникс».</span></div>
+            <div class="flow-row"><span class="k">Отметили</span><span class="v">Перед стартом — чувство собранности, а не разбитости.</span></div>
+          </div>
+        </article>
+        <article class="card case-card reveal">
+          <span class="sport-tag">Футбол · команда 12–14 лет</span>
+          <div class="flow">
+            <div class="flow-row"><span class="k">Запрос</span><span class="v">За 4 дня до турнира — «тяжёлые» ноги у половины команды.</span></div>
+            <div class="flow-row"><span class="k">Протокол</span><span class="v">«Спринт» для шестерых игроков.</span></div>
+            <div class="flow-row"><span class="k">Отметили</span><span class="v">Тренер: во втором матче дети бежали, а не «терпели».</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ВИРУСНЫЙ БЛОК ===================== -->
+  <section id="viral">
+    <div class="container">
+      <div class="viral reveal">
+        <div>
+          <span class="eyebrow">Вирусный контент</span>
+          <h2>Дневник «Чемпион»: 4 дня до старта</h2>
+          <p>Один спортсмен = 4 вертикальных видео. 10 спортсменов = 40 единиц контента на недели вперёд.</p>
+          <span class="hashtag">#Чемпион</span>
+          <span class="hashtag" style="margin-left:8px;">#4днядостарта</span>
+          <ul class="viral-list">
+            <li>День 1: «забитые» ноги или плечи → сеанс биоэнергетического массажа.</li>
+            <li>День 2: приём флакона «Феникса», короткий комментарий спортсмена.</li>
+            <li>День 3: второй сеанс — работа по конкретной зоне.</li>
+            <li>День 4: выход на старт, эмоция, слово спортсмена.</li>
+          </ul>
+          <a href="#signup" class="btn btn-primary" data-package="Хочу снять дневник">Хочу снять свой дневник</a>
+        </div>
+        <div class="video-stack" aria-hidden="true">
+          <div class="v">День 1</div>
+          <div class="v">День 2</div>
+          <div class="v">День 3</div>
+          <div class="v">День 4</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head reveal" style="margin-left:auto; margin-right:auto; text-align:center;">
+        <span class="eyebrow">FAQ</span>
+        <h2>Частые вопросы</h2>
+      </div>
+
+      <div class="faq reveal">
+        <div class="faq-item">
+          <button class="faq-q" type="button">Что такое биоэнергетические перчатки? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Это рабочий инструмент аппарата Fohow: через перчатки идёт мягкое воздействие на активные точки и меридианы. Специалист работает ими как продолжением рук — без давления и дискомфорта.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Это допинг? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Нет. Протокол не содержит запрещённых веществ. Акцент — на восстановлении, сне и тонусе, а не на стимуляции.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">С какого возраста? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Начиная с подростков — с согласия родителей. Для каждой возрастной группы подбирается интенсивность сеанса.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Есть ли противопоказания? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Стандартные: кардиостимулятор, металлические импланты в зоне воздействия, острые состояния. Перед началом — консультация со специалистом.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Сколько длится сеанс? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Около 40–60 минут — в зависимости от зоны и задачи. Первый сеанс короче: специалист знакомится с состоянием спортсмена.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Можно ли только массаж, без эликсира? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Да. Но «Спринт» рассчитан именно на сочетание: массаж снимает забитость, эликсир поддерживает восстановление между сеансами. Так за 4 дня получается полный цикл.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Работаете с командами? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Да. Есть пакет «Командный» от 28 000 ₽: выездные сеансы для 5–8 человек, «Феникс» на команду и мини-семинар для тренера.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Как записаться? <span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Оставьте заявку в форме ниже — свяжемся в течение дня, уточним вид спорта, дату старта и подберём пакет.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA + ФОРМА ===================== -->
+  <section id="signup">
+    <div class="container">
+      <div class="cta-block reveal">
+        <div>
+          <span class="eyebrow">Запись</span>
+          <h2>Готовы стать «Чемпионом» за 4 дня до старта?</h2>
+          <p>Оставьте заявку — подберём пакет под ваш вид спорта и дату соревнований. Первый сеанс можно сделать уже на этой неделе.</p>
+          <p class="disclaimer">
+            Не является лекарственным средством. Не заменяет консультацию врача. Индивидуальные противопоказания уточняйте у специалиста.
+          </p>
+        </div>
+
+        <form class="lead-form" id="leadForm" novalidate>
+          <div class="field">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" placeholder="Как к вам обращаться" required />
+          </div>
+          <div class="field">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" placeholder="+7 ___ ___ __ __" required />
+          </div>
+          <div class="field">
+            <label for="sport">Вид спорта</label>
+            <select id="sport" name="sport" required>
+              <option value="">Выберите</option>
+              <option value="Плавание">Плавание</option>
+              <option value="Борьба">Борьба</option>
+              <option value="Футбол">Футбол</option>
+              <option value="Другое">Другое</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="startdate">Дата старта</label>
+            <input type="date" id="startdate" name="startdate" />
+          </div>
+          <div class="field">
+            <label for="package">Пакет</label>
+            <select id="package" name="package">
+              <option value="Спринт — 3 500 ₽">Спринт — 3 500 ₽</option>
+              <option value="Стандарт — 7 500 ₽">Стандарт — 7 500 ₽</option>
+              <option value="Командный — от 28 000 ₽">Командный — от 28 000 ₽</option>
+              <option value="Хочу снять дневник">Хочу снять дневник</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Записаться в программу «Чемпион» — 3 500 ₽</button>
+          <div class="form-success" id="formSuccess">
+            Спасибо! Заявка принята — свяжемся в течение дня.
+          </div>
+          <div class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== ФУТЕР ===================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:10px;">
+          <div class="logo-mark" aria-hidden="true">🏆</div>
+          <span>Чемпион</span>
+        </div>
+        <p>Программа «Чемпион» — протокол восстановления перед соревнованиями. Плавание, борьба, футбол. Без допинга.</p>
+      </div>
+      <div>
+        <h5>Контакты</h5>
+        <a href="tel:+70000000000">+7 (000) 000-00-00</a>
+        <a href="mailto:info@example.com">info@example.com</a>
+        <span>Сочи</span>
+      </div>
+      <div>
+        <h5>Соцсети</h5>
+        <a href="#" aria-label="Telegram">Telegram</a>
+        <a href="#" aria-label="VK">ВКонтакте</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Программа «Чемпион». Сочи.</span>
+      <span>Не является лекарственным средством.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Появление при скролле
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach((el) => io.observe(el));
+  } else {
+    reveals.forEach((el) => el.classList.add('in'));
+  }
+
+  // FAQ-аккордеон
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach((other) => {
+        other.classList.remove('open');
+        other.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // Кнопки тарифов → подставить пакет в форму
+  document.querySelectorAll('[data-package]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const val = btn.getAttribute('data-package');
+      const select = document.getElementById('package');
+      Array.from(select.options).forEach((opt) => {
+        if (opt.value === val || opt.value.includes(val.split(' — ')[0])) {
+          select.value = opt.value;
+        }
+      });
+    });
+  });
+
+  // Валидация и отправка формы
+  const form = document.getElementById('leadForm');
+  const success = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+    form.querySelectorAll('[required]').forEach((el) => {
+      if (!el.value.trim()) { el.classList.add('invalid'); valid = false; }
+      else el.classList.remove('invalid');
+    });
+    if (!valid) {
+      const firstInvalid = form.querySelector('.invalid');
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
+    success.classList.add('show');
+    form.querySelector('button[type="submit"]').disabled = true;
+    form.querySelector('button[type="submit"]').textContent = 'Заявка отправлена';
+    setTimeout(() => {
+      form.reset();
+      success.classList.remove('show');
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = false;
+      btn.textContent = 'Записаться в программу «Чемпион» — 3 500 ₽';
+    }, 6000);
+  });
+
+  form.querySelectorAll('input, select').forEach((el) => {
+    el.addEventListener('input', () => el.classList.remove('invalid'));
+    el.addEventListener('change', () => el.classList.remove('invalid'));
+  });
+</script>
+</body>
+</html>
